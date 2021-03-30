@@ -1,0 +1,11 @@
+USE go_database;
+SET CHARACTER_SET_CLIENT = utf8;
+SET CHARACTER_SET_CONNECTION = utf8;
+
+CREATE TABLE todo(
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(50) NOT NULL,
+    status VARCHAR(50) NOT NULL
+);
+
+INSERT INTO todo(name, status) VALUES ('Read books', 'WAITING');

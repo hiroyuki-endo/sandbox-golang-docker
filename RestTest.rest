@@ -1,0 +1,21 @@
+### TODOの一覧を取得する
+
+Get http://localhost:8080/todos HTTP/1.1
+
+### TODOを作成する
+
+Post http://localhost:8080/todos HTTP/1.1
+
+{
+    "name" : "golang",
+    "status" : "Wating"
+}
+
+### TODOを削除する
+
+DELETE  http://localhost:8080/todos HTTP/1.1
+
+
+### 特定のTODOを削除する
+
+DELETE  http://localhost:8080/todos/9 HTTP/1.1
