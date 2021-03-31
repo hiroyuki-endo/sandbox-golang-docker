@@ -4,29 +4,13 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
+	"github.com/microsoft/vscode-remote-try-go/database"
 	"github.com/microsoft/vscode-remote-try-go/todo"
 )
 
-func gormConnect() *gorm.DB {
-	DBMS := "mysql"
-	USER := "go_test"
-	PASS := "password"
-	PROTOCOL := "tcp(go-sandbox-db:3306)"
-	DBNAME := "go_database"
-
-	CONNECT := USER + ":" + PASS + "@" + PROTOCOL + "/" + DBNAME
-	db, err := gorm.Open(DBMS, CONNECT)
-
-	if err != nil {
-		panic(err.Error())
-	}
-	return db
-}
-
 func main() {
-	db := gormConnect()
+	db := database.GormConnect()
 	defer db.Close()
 	db.AutoMigrate(&todo.Todo{})
 
