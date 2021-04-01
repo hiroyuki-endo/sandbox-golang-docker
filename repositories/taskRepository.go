@@ -21,9 +21,19 @@ func (tr *TaskRepository) All() *[]todo.Todo {
 	return &todos
 }
 
+func (tr *TaskRepository) FindById(id int) *todo.Todo {
+	todo := todo.Todo{}
+	tr.db.Where("id = ?", id).Find(&todo)
+	return &todo
+}
+
 func (tr *TaskRepository) Create(newTodo *todo.Todo) int {
 	tr.db.Create(newTodo)
 	return newTodo.ID
+}
+
+func (tr *TaskRepository) Save(newTodo *todo.Todo) {
+	tr.db.Save(newTodo)
 }
 
 func (tr *TaskRepository) DeleteAll() {
