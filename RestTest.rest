@@ -1,9 +1,7 @@
 ### TODOの一覧を取得する
-
 Get http://localhost:8080/todos HTTP/1.1
 
 ### TODOを作成する
-
 Post http://localhost:8080/todos HTTP/1.1
 
 {
@@ -11,11 +9,14 @@ Post http://localhost:8080/todos HTTP/1.1
     "status" : "Wating"
 }
 
-### TODOを削除する
+### TODOを完了する
+POST http://localhost:8080/todos/29/done HTTP/1.1
 
+{
+}
+
+### TODOを削除する
 DELETE  http://localhost:8080/todos HTTP/1.1
 
-
 ### 特定のTODOを削除する
-
-DELETE  http://localhost:8080/todos/9 HTTP/1.1
+DELETE  http://localhost:8080/todos/:id HTTP/1.1

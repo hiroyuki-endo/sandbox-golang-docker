@@ -26,6 +26,7 @@ func (tc *TaskController) Endpoints() {
 	tc.createTask()
 	tc.deleteTasks()
 	tc.deleteTaskById()
+	tc.doneTask()
 }
 
 func (tc *TaskController) getTasks() {
@@ -45,6 +46,16 @@ func (tc *TaskController) createTask() {
 
 		tc.taskRepository.Create(&newTodo)
 		c.JSON(http.StatusOK, newTodo.ID)
+	})
+}
+
+func (tc *TaskController) doneTask() {
+	tc.router.POST("/todos/:id/done", func(c *gin.Context) {
+		id := c.Param("id")
+		numId, _ := strconv.Atoi(id)
+		doneTask := tc.taskRepository.FindById(numId)
+		doneTask.Status = "Done"
+		tc.taskRepository.Save(doneTask)
 	})
 }
 
