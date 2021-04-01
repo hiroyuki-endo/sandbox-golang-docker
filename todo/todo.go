@@ -5,3 +5,7 @@ type Todo struct {
 	Name   string `json:"name"`
 	Status string `json:"status"`
 }
+
+func (todo *Todo) Done() {
+	todo.Status = "Done"
+}

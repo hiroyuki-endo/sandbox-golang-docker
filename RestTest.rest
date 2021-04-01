@@ -10,7 +10,7 @@ Post http://localhost:8080/todos HTTP/1.1
 }
 
 ### TODOを完了する
-POST http://localhost:8080/todos/29/done HTTP/1.1
+POST http://localhost:8080/todos/30/done HTTP/1.1
 
 {
 }

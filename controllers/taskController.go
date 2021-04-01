@@ -54,7 +54,7 @@ func (tc *TaskController) doneTask() {
 		id := c.Param("id")
 		numId, _ := strconv.Atoi(id)
 		doneTask := tc.taskRepository.FindById(numId)
-		doneTask.Status = "Done"
+		doneTask.Done()
 		tc.taskRepository.Save(doneTask)
 	})
 }
