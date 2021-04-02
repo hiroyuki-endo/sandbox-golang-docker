@@ -5,8 +5,8 @@ import (
 	"strconv"
 
 	"github.com/gin-gonic/gin"
+	"github.com/microsoft/vscode-remote-try-go/models"
 	"github.com/microsoft/vscode-remote-try-go/repositories"
-	"github.com/microsoft/vscode-remote-try-go/todo"
 )
 
 type TaskController struct {
@@ -38,7 +38,7 @@ func (tc *TaskController) getTasks() {
 
 func (tc *TaskController) createTask() {
 	tc.router.POST("/todos", func(c *gin.Context) {
-		var newTodo todo.Todo
+		var newTodo models.Todo
 		if err := c.ShouldBindJSON(&newTodo); err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
