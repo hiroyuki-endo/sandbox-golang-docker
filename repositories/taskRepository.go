@@ -2,7 +2,7 @@ package repositories
 
 import (
 	"github.com/jinzhu/gorm"
-	"github.com/microsoft/vscode-remote-try-go/todo"
+	"github.com/microsoft/vscode-remote-try-go/models"
 )
 
 type TaskRepository struct {
@@ -15,35 +15,35 @@ func CreateTaskRepository(db *gorm.DB) *TaskRepository {
 	return newTaskRepository
 }
 
-func (tr *TaskRepository) All() *[]todo.Todo {
-	todos := []todo.Todo{}
+func (tr *TaskRepository) All() *[]models.Todo {
+	todos := []models.Todo{}
 	tr.db.Find(&todos)
 	return &todos
 }
 
-func (tr *TaskRepository) FindById(id int) *todo.Todo {
-	todo := todo.Todo{}
+func (tr *TaskRepository) FindById(id int) *models.Todo {
+	todo := models.Todo{}
 	tr.db.Where("id = ?", id).Find(&todo)
 	return &todo
 }
 
-func (tr *TaskRepository) Create(newTodo *todo.Todo) int {
+func (tr *TaskRepository) Create(newTodo *models.Todo) int {
 	tr.db.Create(newTodo)
 	return newTodo.ID
 }
 
-func (tr *TaskRepository) Save(newTodo *todo.Todo) {
+func (tr *TaskRepository) Save(newTodo *models.Todo) {
 	tr.db.Save(newTodo)
 }
 
 func (tr *TaskRepository) DeleteAll() {
-	todos := []todo.Todo{}
+	todos := []models.Todo{}
 	tr.db.Find(&todos)
 	tr.db.Delete(&todos)
 }
 
 func (tr *TaskRepository) DeleteById(id int) {
-	todo := todo.Todo{}
+	todo := models.Todo{}
 	tr.db.Where("id = ?", id).Find(&todo)
 	tr.db.Delete(&todo)
 }

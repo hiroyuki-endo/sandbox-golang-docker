@@ -1,4 +1,4 @@
-package todo
+package models
 
 type Todo struct {
 	ID     int    `gorm:"AUTO_INCREMENT" json:"id"`
