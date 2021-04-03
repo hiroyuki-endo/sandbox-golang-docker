@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"fmt"
 	"net/http"
 	"strconv"
 
@@ -53,7 +54,12 @@ func (tc *TaskController) createTask() {
 func (tc *TaskController) startTask() {
 	tc.router.POST("/todos/:id/start", func(c *gin.Context) {
 		startTask := tc.taskByPathId(c)
-		startTask.Start()
+		err := startTask.Start()
+		if err != nil {
+			fmt.Println(err)
+			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+			return
+		}
 		tc.taskRepository.Save(startTask)
 	})
 }
@@ -61,7 +67,12 @@ func (tc *TaskController) startTask() {
 func (tc *TaskController) doneTask() {
 	tc.router.POST("/todos/:id/done", func(c *gin.Context) {
 		doneTask := tc.taskByPathId(c)
-		doneTask.Done()
+		err := doneTask.Done()
+		if err != nil {
+			fmt.Println(err)
+			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+			return
+		}
 		tc.taskRepository.Save(doneTask)
 	})
 }
