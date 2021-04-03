@@ -26,6 +26,7 @@ func (tc *TaskController) Endpoints() {
 	tc.createTask()
 	tc.deleteTasks()
 	tc.deleteTaskById()
+	tc.startTask()
 	tc.doneTask()
 }
 
@@ -43,17 +44,23 @@ func (tc *TaskController) createTask() {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
 		}
-
+		newTodo.Status = "Ready"
 		tc.taskRepository.Create(&newTodo)
 		c.JSON(http.StatusOK, newTodo.ID)
 	})
 }
 
+func (tc *TaskController) startTask() {
+	tc.router.POST("/todos/:id/start", func(c *gin.Context) {
+		startTask := tc.taskByPathId(c)
+		startTask.Start()
+		tc.taskRepository.Save(startTask)
+	})
+}
+
 func (tc *TaskController) doneTask() {
 	tc.router.POST("/todos/:id/done", func(c *gin.Context) {
-		id := c.Param("id")
-		numId, _ := strconv.Atoi(id)
-		doneTask := tc.taskRepository.FindById(numId)
+		doneTask := tc.taskByPathId(c)
 		doneTask.Done()
 		tc.taskRepository.Save(doneTask)
 	})
@@ -71,4 +78,11 @@ func (tc *TaskController) deleteTaskById() {
 		numId, _ := strconv.Atoi(id)
 		tc.taskRepository.DeleteById(numId)
 	})
+}
+
+func (tc *TaskController) taskByPathId(c *gin.Context) *models.Todo {
+	id := c.Param("id")
+	numId, _ := strconv.Atoi(id)
+	todo := tc.taskRepository.FindById(numId)
+	return todo
 }

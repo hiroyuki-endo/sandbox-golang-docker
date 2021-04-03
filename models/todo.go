@@ -9,3 +9,7 @@ type Todo struct {
 func (todo *Todo) Done() {
 	todo.Status = "Done"
 }
+
+func (todo *Todo) Start() {
+	todo.Status = "Doing"
+}
