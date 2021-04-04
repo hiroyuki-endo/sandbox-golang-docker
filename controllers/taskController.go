@@ -24,6 +24,7 @@ func CreateTaskController(taskRepository *repositories.TaskRepository, router *g
 
 func (tc *TaskController) Endpoints() {
 	tc.getTasks()
+	tc.getTask()
 	tc.createTask()
 	tc.deleteTasks()
 	tc.deleteTaskById()
@@ -35,6 +36,18 @@ func (tc *TaskController) getTasks() {
 	tc.router.GET("/todos", func(c *gin.Context) {
 		todos := tc.taskRepository.All()
 		c.JSON(http.StatusOK, todos)
+	})
+}
+
+func (tc *TaskController) getTask() {
+	tc.router.GET("/todos/:id", func(c *gin.Context) {
+		task, err1 := tc.taskByPathId(c)
+		if err1 != nil {
+			fmt.Println(err1)
+			c.JSON(http.StatusInternalServerError, gin.H{"error": err1.Error()})
+			return
+		}
+		c.JSON(http.StatusOK, task)
 	})
 }
 
@@ -53,11 +66,16 @@ func (tc *TaskController) createTask() {
 
 func (tc *TaskController) startTask() {
 	tc.router.POST("/todos/:id/start", func(c *gin.Context) {
-		startTask := tc.taskByPathId(c)
-		err := startTask.Start()
-		if err != nil {
-			fmt.Println(err)
-			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		startTask, err1 := tc.taskByPathId(c)
+		if err1 != nil {
+			fmt.Println(err1)
+			c.JSON(http.StatusInternalServerError, gin.H{"error": err1.Error()})
+			return
+		}
+		err2 := startTask.Start()
+		if err2 != nil {
+			fmt.Println(err2)
+			c.JSON(http.StatusInternalServerError, gin.H{"error": err2.Error()})
 			return
 		}
 		tc.taskRepository.Save(startTask)
@@ -66,11 +84,16 @@ func (tc *TaskController) startTask() {
 
 func (tc *TaskController) doneTask() {
 	tc.router.POST("/todos/:id/done", func(c *gin.Context) {
-		doneTask := tc.taskByPathId(c)
-		err := doneTask.Done()
-		if err != nil {
-			fmt.Println(err)
-			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		doneTask, err1 := tc.taskByPathId(c)
+		if err1 != nil {
+			fmt.Println(err1)
+			c.JSON(http.StatusInternalServerError, gin.H{"error": err1.Error()})
+			return
+		}
+		err2 := doneTask.Done()
+		if err2 != nil {
+			fmt.Println(err2)
+			c.JSON(http.StatusInternalServerError, gin.H{"error": err2.Error()})
 			return
 		}
 		tc.taskRepository.Save(doneTask)
@@ -91,9 +114,12 @@ func (tc *TaskController) deleteTaskById() {
 	})
 }
 
-func (tc *TaskController) taskByPathId(c *gin.Context) *models.Todo {
+func (tc *TaskController) taskByPathId(c *gin.Context) (*models.Todo, error) {
 	id := c.Param("id")
 	numId, _ := strconv.Atoi(id)
-	todo := tc.taskRepository.FindById(numId)
-	return todo
+	todo, err := tc.taskRepository.FindById(numId)
+	if err != nil {
+		return todo, err
+	}
+	return todo, nil
 }

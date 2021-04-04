@@ -1,6 +1,8 @@
 package repositories
 
 import (
+	"fmt"
+
 	"github.com/jinzhu/gorm"
 	"github.com/microsoft/vscode-remote-try-go/models"
 )
@@ -21,10 +23,14 @@ func (tr *TaskRepository) All() *[]models.Todo {
 	return &todos
 }
 
-func (tr *TaskRepository) FindById(id int) *models.Todo {
+func (tr *TaskRepository) FindById(id int) (*models.Todo, error) {
 	todo := models.Todo{}
 	tr.db.Where("id = ?", id).Find(&todo)
-	return &todo
+	if todo.ID == 0 {
+		err := fmt.Errorf("not exists todo by id(%d)", id)
+		return nil, err
+	}
+	return &todo, nil
 }
 
 func (tr *TaskRepository) Create(newTodo *models.Todo) int {
