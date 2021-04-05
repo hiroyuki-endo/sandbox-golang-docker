@@ -1,6 +1,9 @@
 ### TODOの一覧を取得する
 Get http://localhost:8080/todos HTTP/1.1
 
+### IDを指定してTODOを取得する
+Get http://localhost:8080/todos/41 HTTP/1.1
+
 ### TODOを作成する
 Post http://localhost:8080/todos HTTP/1.1
 
