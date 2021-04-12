@@ -1,25 +1,31 @@
 # TODO Application with VSCode Remote Container
 
 ## Docker Containers
+
+* web
+  * フロントエンド(react)のコンテナ
 * app
-    * golangのコンテナ
+  * バックエンド(golang)のコンテナ
 * db
-    * MySQLのコンテナ
+  * MySQLのコンテナ
 
 ## golang
+
 * Web API
-    * gin を使用してAPIを作成。ginは宣言的にWebAPIのルーティングを記述できる
+  * gin を使用してAPIを作成。ginは宣言的にWebAPIのルーティングを記述できる
+
     ```
     func (tc *TaskController) getTasks() {
-	tc.router.GET("/todos", func(c *gin.Context) {
-		todos := tc.taskRepository.All()
-		c.JSON(http.StatusOK, todos)
-	})
+    tc.router.GET("/todos", func(c *gin.Context) {
+        todos := tc.taskRepository.All()
+        c.JSON(http.StatusOK, todos)
+    })
     }
     ```
 
 * ORM
-    * gorm を使用してリポジトリを作成。
+  * gorm を使用してリポジトリを作成。
+  
     ```
     type TaskRepository struct {
         db *gorm.DB
@@ -37,8 +43,9 @@
         return &todos
     }
     ```
+
 * アプリケーションアーキテクチャ
-    * TODOを DomainModelとして実装。構造体に状態変更の関数を作成。
+  * TODOを DomainModelとして実装。構造体に状態変更の関数を作成。
     ```
     package models
 
@@ -70,11 +77,13 @@
     ```
 
 ## MySQL
+
 * 初期データ
-    * コンテナ作成時の初期データは `/docker-entrypoint-initdb.d` に配置する
-    * 設定ファイルは `/etc/mysql/conf.d` に配置する
+  * コンテナ作成時の初期データは `/docker-entrypoint-initdb.d` に配置する
+  * 設定ファイルは `/etc/mysql/conf.d` に配置する
 
 ## メモ
+
 * docker volumeは消えないので、/docker-entrypoint-initdb.d にファイルが存在している場合は、内容を変更しても変わらない
 * docker compose で command: sleep infinity を指定しないと、コンテナが起動終了後に止まる？
 * gormはデフォルトだと構造体を複数形にしたテーブル名を使用する

@@ -21,7 +21,7 @@ services:
       context: .
       dockerfile: Dockerfile.frontend
     volumes:
-      - ./frontend:/usr/app/src
+      - ./frontend:/usr/src/app/
     #command: sh -c "cd react-sample && yarn start"
     command: sleep infinity
     ports:

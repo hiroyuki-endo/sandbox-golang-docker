@@ -19,7 +19,7 @@
 	],
 	*/
 	"service": "web",
-	"workspaceFolder": "/usr/app/",
+	"workspaceFolder": "/usr/src/app/",
 	"settings": {
 		"terminal.integrated.shell.linux": null,
 		"files.trimTrailingWhitespace": true,
