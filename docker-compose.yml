@@ -2,18 +2,31 @@ version: "3.7"
 
 services:
   app:
-    container_name: go-sandbox
+    container_name: go-todo
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.backend
     volumes:
-      - ../:/go/src/app:cached
+      - ./backend/:/go/src/app:cached
     command: sleep infinity
     ports:
       - 8080:8080
     restart: always
     depends_on:
       - "db"
+
+  web:
+    container_name: react-todo
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    volumes:
+      - ./frontend:/usr/app/src
+    #command: sh -c "cd react-sample && yarn start"
+    command: sleep infinity
+    ports:
+      - "3000:3000"
+    restart: always
 
   db:
     container_name: go-sandbox-db
