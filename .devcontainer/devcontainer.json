@@ -1,8 +1,9 @@
 {
 	"name": "go",
 	"dockerComposeFile": [
-		"./docker-compose.yml"
+		"../docker-compose.yml"
 	],
+	/*
 	"service": "app",
 	"workspaceFolder": "/go/src/app",
 	"settings": {
@@ -15,6 +16,27 @@
 		"ms-vscode.go",
 		"golang.go",
 		"humao.rest-client"
+	],
+	*/
+	"service": "web",
+	"workspaceFolder": "/usr/app/",
+	"settings": {
+		"terminal.integrated.shell.linux": null,
+		"files.trimTrailingWhitespace": true,
+		"editor.formatOnSave": true
+	},
+	"extensions": [
+		"eamodio.gitlens",
+		"chakrounanas.turbo-console-log",
+		"visualstudioexptteam.vscodeintellicode",
+		"esbenp.prettier-vscode",
+		"dbaeumer.vscode-eslint",
+		"shardulm94.trailing-spaces",
+		"msjsdiag.debugger-for-chrome",
+		"christian-kohler.path-intellisense",
+		"usernamehw.errorlens",
+		"gizak.shortcuts",
+		"coenraads.bracket-pair-colorizer-2"
 	],
 	"shutdownAction": "stopCompose"
 }
