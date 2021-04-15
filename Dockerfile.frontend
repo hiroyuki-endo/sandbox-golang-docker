@@ -1,4 +1,5 @@
-FROM node:14.16.1-alpine
+FROM node:lts-alpine3.13
+
 
 SHELL ["/bin/ash", "-c"]
 WORKDIR /usr/src/app
